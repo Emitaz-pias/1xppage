@@ -1,0 +1,402 @@
+[
+  {
+    "country_name": "Argentina",
+    "iso_code": "AR",
+    "phone_code": "+54",
+    "flag_url": "https://flagcdn.com/w320/ar.png",
+    "divisions_or_regions": ["Buenos Aires", "Córdoba", "Santa Fe", "Mendoza", "Tucumán"],
+    "major_cities": ["Buenos Aires", "Córdoba", "Rosario", "Mendoza", "La Plata"]
+  },
+  {
+    "country_name": "Australia",
+    "iso_code": "AU",
+    "phone_code": "+61",
+    "flag_url": "https://flagcdn.com/w320/au.png",
+    "divisions_or_regions": ["New South Wales", "Victoria", "Queensland", "Western Australia", "South Australia"],
+    "major_cities": ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"]
+  },
+  {
+    "country_name": "Bangladesh",
+    "iso_code": "BD",
+    "phone_code": "+880",
+    "flag_url": "https://flagcdn.com/w320/bd.png",
+    "divisions_or_regions": ["Dhaka", "Chattogram", "Rajshahi", "Khulna", "Sylhet", "Barishal", "Rangpur", "Mymensingh"],
+    "major_cities": ["Dhaka", "Chattogram", "Khulna", "Rajshahi", "Sylhet", "Cumilla", "Gazipur"]
+  },
+  {
+    "country_name": "Belgium",
+    "iso_code": "BE",
+    "phone_code": "+32",
+    "flag_url": "https://flagcdn.com/w320/be.png",
+    "divisions_or_regions": ["Flemish Region", "Walloon Region", "Brussels-Capital Region"],
+    "major_cities": ["Brussels", "Antwerp", "Ghent", "Charleroi", "Liège"]
+  },
+  {
+    "country_name": "Brazil",
+    "iso_code": "BR",
+    "phone_code": "+55",
+    "flag_url": "https://flagcdn.com/w320/br.png",
+    "divisions_or_regions": ["São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia", "Paraná", "Rio Grande do Sul"],
+    "major_cities": ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador", "Fortaleza"]
+  },
+  {
+    "country_name": "Canada",
+    "iso_code": "CA",
+    "phone_code": "+1",
+    "flag_url": "https://flagcdn.com/w320/ca.png",
+    "divisions_or_regions": ["Ontario", "Quebec", "British Columbia", "Alberta", "Manitoba"],
+    "major_cities": ["Toronto", "Montreal", "Vancouver", "Calgary", "Edmonton"]
+  },
+  {
+    "country_name": "Chile",
+    "iso_code": "CL",
+    "phone_code": "+56",
+    "flag_url": "https://flagcdn.com/w320/cl.png",
+    "divisions_or_regions": ["Santiago Metropolitan", "Valparaíso", "Biobío", "Antofagasta"],
+    "major_cities": ["Santiago", "Valparaíso", "Concepción", "La Serena", "Antofagasta"]
+  },
+  {
+    "country_name": "Colombia",
+    "iso_code": "CO",
+    "phone_code": "+57",
+    "flag_url": "https://flagcdn.com/w320/co.png",
+    "divisions_or_regions": ["Bogotá", "Antioquia", "Valle del Cauca", "Cundinamarca", "Atlántico"],
+    "major_cities": ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"]
+  },
+  {
+    "country_name": "Czech Republic",
+    "iso_code": "CZ",
+    "phone_code": "+420",
+    "flag_url": "https://flagcdn.com/w320/cz.png",
+    "divisions_or_regions": ["Prague", "Central Bohemian", "South Moravian", "Moravian-Silesian"],
+    "major_cities": ["Prague", "Brno", "Ostrava", "Plzeň", "Liberec"]
+  },
+  {
+    "country_name": "Denmark",
+    "iso_code": "DK",
+    "phone_code": "+45",
+    "flag_url": "https://flagcdn.com/w320/dk.png",
+    "divisions_or_regions": ["Capital Region", "Central Denmark", "North Denmark", "Southern Denmark", "Zealand"],
+    "major_cities": ["Copenhagen", "Aarhus", "Odense", "Aalborg", "Esbjerg"]
+  },
+  {
+    "country_name": "Egypt",
+    "iso_code": "EG",
+    "phone_code": "+20",
+    "flag_url": "https://flagcdn.com/w320/eg.png",
+    "divisions_or_regions": ["Cairo", "Giza", "Alexandria", "Dakahlia", "Sharqia"],
+    "major_cities": ["Cairo", "Alexandria", "Giza", "Shubra El Kheima", "Port Said"]
+  },
+  {
+    "country_name": "Finland",
+    "iso_code": "FI",
+    "phone_code": "+358",
+    "flag_url": "https://flagcdn.com/w320/fi.png",
+    "divisions_or_regions": ["Uusimaa", "Pirkanmaa", "Southwest Finland", "North Ostrobothnia"],
+    "major_cities": ["Helsinki", "Espoo", "Tampere", "Vantaa", "Oulu"]
+  },
+  {
+    "country_name": "France",
+    "iso_code": "FR",
+    "phone_code": "+33",
+    "flag_url": "https://flagcdn.com/w320/fr.png",
+    "divisions_or_regions": ["Île-de-France", "Auvergne-Rhône-Alpes", "Nouvelle-Aquitaine", "Occitanie", "Hauts-de-France"],
+    "major_cities": ["Paris", "Marseille", "Lyon", "Toulouse", "Nice"]
+  },
+  {
+    "country_name": "Germany",
+    "iso_code": "DE",
+    "phone_code": "+49",
+    "flag_url": "https://flagcdn.com/w320/de.png",
+    "divisions_or_regions": ["Bavaria", "North Rhine-Westphalia", "Baden-Württemberg", "Hesse", "Berlin", "Hamburg"],
+    "major_cities": ["Berlin", "Hamburg", "Munich", "Cologne", "Frankfurt"]
+  },
+  {
+    "country_name": "Ghana",
+    "iso_code": "GH",
+    "phone_code": "+233",
+    "flag_url": "https://flagcdn.com/w320/gh.png",
+    "divisions_or_regions": ["Greater Accra", "Ashanti", "Eastern", "Central", "Western"],
+    "major_cities": ["Accra", "Kumasi", "Tamale", "Sekondi-Takoradi", "Cape Coast"]
+  },
+  {
+    "country_name": "Greece",
+    "iso_code": "GR",
+    "phone_code": "+30",
+    "flag_url": "https://flagcdn.com/w320/gr.png",
+    "divisions_or_regions": ["Attica", "Central Macedonia", "Thessaly", "Western Greece", "Crete"],
+    "major_cities": ["Athens", "Thessaloniki", "Patras", "Heraklion", "Larissa"]
+  },
+  {
+    "country_name": "Hungary",
+    "iso_code": "HU",
+    "phone_code": "+36",
+    "flag_url": "https://flagcdn.com/w320/hu.png",
+    "divisions_or_regions": ["Budapest", "Pest", "Borsod-Abaúj-Zemplén", "Hajdú-Bihar"],
+    "major_cities": ["Budapest", "Debrecen", "Szeged", "Miskolc", "Pécs"]
+  },
+  {
+    "country_name": "India",
+    "iso_code": "IN",
+    "phone_code": "+91",
+    "flag_url": "https://flagcdn.com/w320/in.png",
+    "divisions_or_regions": ["Maharashtra", "Delhi", "Karnataka", "West Bengal", "Tamil Nadu", "Uttar Pradesh", "Gujarat"],
+    "major_cities": ["Mumbai", "Delhi", "Bengaluru", "Kolkata", "Chennai", "Hyderabad"]
+  },
+  {
+    "country_name": "Indonesia",
+    "iso_code": "ID",
+    "phone_code": "+62",
+    "flag_url": "https://flagcdn.com/w320/id.png",
+    "divisions_or_regions": ["Jakarta", "West Java", "East Java", "Central Java", "North Sumatra", "Banten"],
+    "major_cities": ["Jakarta", "Surabaya", "Bandung", "Medan", "Semarang"]
+  },
+  {
+    "country_name": "Ireland",
+    "iso_code": "IE",
+    "phone_code": "+353",
+    "flag_url": "https://flagcdn.com/w320/ie.png",
+    "divisions_or_regions": ["Leinster", "Munster", "Connacht", "Ulster (part of)"],
+    "major_cities": ["Dublin", "Cork", "Limerick", "Galway", "Waterford"]
+  },
+  {
+    "country_name": "Italy",
+    "iso_code": "IT",
+    "phone_code": "+39",
+    "flag_url": "https://flagcdn.com/w320/it.png",
+    "divisions_or_regions": ["Lombardy", "Lazio", "Campania", "Veneto", "Sicily", "Piedmont"],
+    "major_cities": ["Rome", "Milan", "Naples", "Turin", "Palermo"]
+  },
+  {
+    "country_name": "Japan",
+    "iso_code": "JP",
+    "phone_code": "+81",
+    "flag_url": "https://flagcdn.com/w320/jp.png",
+    "divisions_or_regions": ["Tokyo", "Osaka", "Kanagawa", "Aichi", "Hokkaido", "Fukuoka"],
+    "major_cities": ["Tokyo", "Yokohama", "Osaka", "Nagoya", "Sapporo"]
+  },
+  {
+    "country_name": "Kenya",
+    "iso_code": "KE",
+    "phone_code": "+254",
+    "flag_url": "https://flagcdn.com/w320/ke.png",
+    "divisions_or_regions": ["Nairobi", "Mombasa", "Kisumu", "Nakuru", "Uasin Gishu"],
+    "major_cities": ["Nairobi", "Mombasa", "Kisumu", "Nakuru", "Eldoret"]
+  },
+  {
+    "country_name": "Malaysia",
+    "iso_code": "MY",
+    "phone_code": "+60",
+    "flag_url": "https://flagcdn.com/w320/my.png",
+    "divisions_or_regions": ["Selangor", "Johor", "Penang", "Sabah", "Sarawak", "Kuala Lumpur (FT)"],
+    "major_cities": ["Kuala Lumpur", "George Town", "Johor Bahru", "Ipoh", "Shah Alam"]
+  },
+  {
+    "country_name": "Mexico",
+    "iso_code": "MX",
+    "phone_code": "+52",
+    "flag_url": "https://flagcdn.com/w320/mx.png",
+    "divisions_or_regions": ["Mexico City", "State of Mexico", "Jalisco", "Nuevo León", "Puebla", "Veracruz"],
+    "major_cities": ["Mexico City", "Guadalajara", "Monterrey", "Puebla", "Tijuana"]
+  },
+  {
+    "country_name": "Morocco",
+    "iso_code": "MA",
+    "phone_code": "+212",
+    "flag_url": "https://flagcdn.com/w320/ma.png",
+    "divisions_or_regions": ["Casablanca-Settat", "Rabat-Salé-Kénitra", "Marrakesh-Safi", "Fès-Meknès"],
+    "major_cities": ["Casablanca", "Rabat", "Fes", "Marrakesh", "Tangier"]
+  },
+  {
+    "country_name": "Netherlands",
+    "iso_code": "NL",
+    "phone_code": "+31",
+    "flag_url": "https://flagcdn.com/w320/nl.png",
+    "divisions_or_regions": ["North Holland", "South Holland", "North Brabant", "Gelderland", "Utrecht"],
+    "major_cities": ["Amsterdam", "Rotterdam", "The Hague", "Utrecht", "Eindhoven"]
+  },
+  {
+    "country_name": "New Zealand",
+    "iso_code": "NZ",
+    "phone_code": "+64",
+    "flag_url": "https://flagcdn.com/w320/nz.png",
+    "divisions_or_regions": ["Auckland", "Wellington", "Canterbury", "Waikato", "Otago"],
+    "major_cities": ["Auckland", "Wellington", "Christchurch", "Hamilton", "Tauranga"]
+  },
+  {
+    "country_name": "Nigeria",
+    "iso_code": "NG",
+    "phone_code": "+234",
+    "flag_url": "https://flagcdn.com/w320/ng.png",
+    "divisions_or_regions": ["Lagos", "Kano", "Abuja (FCT)", "Rivers", "Oyo", "Kaduna"],
+    "major_cities": ["Lagos", "Kano", "Ibadan", "Abuja", "Port Harcourt"]
+  },
+  {
+    "country_name": "Norway",
+    "iso_code": "NO",
+    "phone_code": "+47",
+    "flag_url": "https://flagcdn.com/w320/no.png",
+    "divisions_or_regions": ["Oslo", "Viken", "Vestland", "Rogaland", "Trøndelag"],
+    "major_cities": ["Oslo", "Bergen", "Trondheim", "Stavanger", "Drammen"]
+  },
+  {
+    "country_name": "Pakistan",
+    "iso_code": "PK",
+    "phone_code": "+92",
+    "flag_url": "https://flagcdn.com/w320/pk.png",
+    "divisions_or_regions": ["Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan", "Islamabad Capital Territory"],
+    "major_cities": ["Karachi", "Lahore", "Faisalabad", "Rawalpindi", "Islamabad"]
+  },
+  {
+    "country_name": "Peru",
+    "iso_code": "PE",
+    "phone_code": "+51",
+    "flag_url": "https://flagcdn.com/w320/pe.png",
+    "divisions_or_regions": ["Lima", "Arequipa", "La Libertad", "Piura", "Cusco"],
+    "major_cities": ["Lima", "Arequipa", "Trujillo", "Chiclayo", "Piura"]
+  },
+  {
+    "country_name": "Philippines",
+    "iso_code": "PH",
+    "phone_code": "+63",
+    "flag_url": "https://flagcdn.com/w320/ph.png",
+    "divisions_or_regions": ["Metro Manila", "Cebu", "Davao", "Calabarzon", "Central Luzon"],
+    "major_cities": ["Manila", "Quezon City", "Davao City", "Cebu City", "Zamboanga City"]
+  },
+  {
+    "country_name": "Poland",
+    "iso_code": "PL",
+    "phone_code": "+48",
+    "flag_url": "https://flagcdn.com/w320/pl.png",
+    "divisions_or_regions": ["Masovian", "Silesian", "Greater Poland", "Lesser Poland", "Lower Silesian"],
+    "major_cities": ["Warsaw", "Kraków", "Łódź", "Wrocław", "Poznań"]
+  },
+  {
+    "country_name": "Portugal",
+    "iso_code": "PT",
+    "phone_code": "+351",
+    "flag_url": "https://flagcdn.com/w320/pt.png",
+    "divisions_or_regions": ["Lisbon", "Porto", "Braga", "Setúbal", "Aveiro", "Faro (Algarve)"],
+    "major_cities": ["Lisbon", "Porto", "Vila Nova de Gaia", "Amadora", "Braga"]
+  },
+  {
+    "country_name": "Romania",
+    "iso_code": "RO",
+    "phone_code": "+40",
+    "flag_url": "https://flagcdn.com/w320/ro.png",
+    "divisions_or_regions": ["Bucharest", "Cluj", "Timiș", "Iași", "Constanța"],
+    "major_cities": ["Bucharest", "Cluj-Napoca", "Timișoara", "Iași", "Constanța"]
+  },
+  {
+    "country_name": "Russia",
+    "iso_code": "RU",
+    "phone_code": "+7",
+    "flag_url": "https://flagcdn.com/w320/ru.png",
+    "divisions_or_regions": ["Moscow", "Saint Petersburg", "Moscow Oblast", "Krasnodar Krai", "Sverdlovsk Oblast"],
+    "major_cities": ["Moscow", "Saint Petersburg", "Novosibirsk", "Yekaterinburg", "Kazan"]
+  },
+  {
+    "country_name": "Singapore",
+    "iso_code": "SG",
+    "phone_code": "+65",
+    "flag_url": "https://flagcdn.com/w320/sg.png",
+    "divisions_or_regions": ["Central Region", "East Region", "North Region", "North-East Region", "West Region"],
+    "major_cities": ["Singapore (City State)"]
+  },
+  {
+    "country_name": "South Africa",
+    "iso_code": "ZA",
+    "phone_code": "+27",
+    "flag_url": "https://flagcdn.com/w320/za.png",
+    "divisions_or_regions": ["Gauteng", "KwaZulu-Natal", "Western Cape", "Eastern Cape", "Limpopo"],
+    "major_cities": ["Johannesburg", "Cape Town", "Durban", "Pretoria", "Gqeberha"]
+  },
+  {
+    "country_name": "South Korea",
+    "iso_code": "KR",
+    "phone_code": "+82",
+    "flag_url": "https://flagcdn.com/w320/kr.png",
+    "divisions_or_regions": ["Seoul", "Gyeonggi", "Busan", "Incheon", "Daegu", "Gyeongsangnam"],
+    "major_cities": ["Seoul", "Busan", "Incheon", "Daegu", "Daejeon"]
+  },
+  {
+    "country_name": "Spain",
+    "iso_code": "ES",
+    "phone_code": "+34",
+    "flag_url": "https://flagcdn.com/w320/es.png",
+    "divisions_or_regions": ["Madrid", "Catalonia", "Andalusia", "Valencian Community", "Galicia"],
+    "major_cities": ["Madrid", "Barcelona", "Valencia", "Seville", "Zaragoza"]
+  },
+  {
+    "country_name": "Sweden",
+    "iso_code": "SE",
+    "phone_code": "+46",
+    "flag_url": "https://flagcdn.com/w320/se.png",
+    "divisions_or_regions": ["Stockholm", "Västra Götaland", "Skåne", "Uppsala", "Östergötland"],
+    "major_cities": ["Stockholm", "Gothenburg", "Malmö", "Uppsala", "Västerås"]
+  },
+  {
+    "country_name": "Tanzania",
+    "iso_code": "TZ",
+    "phone_code": "+255",
+    "flag_url": "https://flagcdn.com/w320/tz.png",
+    "divisions_or_regions": ["Dar es Salaam", "Mwanza", "Arusha", "Dodoma", "Zanzibar"],
+    "major_cities": ["Dar es Salaam", "Mwanza", "Zanzibar City", "Arusha", "Dodoma"]
+  },
+  {
+    "country_name": "Thailand",
+    "iso_code": "TH",
+    "phone_code": "+66",
+    "flag_url": "https://flagcdn.com/w320/th.png",
+    "divisions_or_regions": ["Bangkok", "Chiang Mai", "Phuket", "Chonburi", "Nakhon Ratchasima"],
+    "major_cities": ["Bangkok", "Nonthaburi", "Nakhon Ratchasima", "Chiang Mai", "Hat Yai"]
+  },
+  {
+    "country_name": "Turkey",
+    "iso_code": "TR",
+    "phone_code": "+90",
+    "flag_url": "https://flagcdn.com/w320/tr.png",
+    "divisions_or_regions": ["Istanbul", "Ankara", "Izmir", "Bursa", "Antalya", "Adana"],
+    "major_cities": ["Istanbul", "Ankara", "Izmir", "Bursa", "Adana"]
+  },
+  {
+    "country_name": "Uganda",
+    "iso_code": "UG",
+    "phone_code": "+256",
+    "flag_url": "https://flagcdn.com/w320/ug.png",
+    "divisions_or_regions": ["Central", "Western", "Eastern", "Northern"],
+    "major_cities": ["Kampala", "Nansana", "Kira", "Ssabagabo", "Mbarara"]
+  },
+  {
+    "country_name": "United Arab Emirates",
+    "iso_code": "AE",
+    "phone_code": "+971",
+    "flag_url": "https://flagcdn.com/w320/ae.png",
+    "divisions_or_regions": ["Abu Dhabi", "Dubai", "Sharjah", "Ajman", "Ras Al Khaimah"],
+    "major_cities": ["Dubai", "Abu Dhabi", "Sharjah", "Al Ain", "Ajman"]
+  },
+  {
+    "country_name": "United Kingdom",
+    "iso_code": "GB",
+    "phone_code": "+44",
+    "flag_url": "https://flagcdn.com/w320/gb.png",
+    "divisions_or_regions": ["England", "Scotland", "Wales", "Northern Ireland"],
+    "major_cities": ["London", "Manchester", "Birmingham", "Glasgow", "Liverpool"]
+  },
+  {
+    "country_name": "United States",
+    "iso_code": "US",
+    "phone_code": "+1",
+    "flag_url": "https://flagcdn.com/w320/us.png",
+    "divisions_or_regions": ["California", "New York", "Texas", "Florida", "Illinois"],
+    "major_cities": ["New York City", "Los Angeles", "Chicago", "Houston", "Phoenix"]
+  },
+  {
+    "country_name": "Vietnam",
+    "iso_code": "VN",
+    "phone_code": "+84",
+    "flag_url": "https://flagcdn.com/w320/vn.png",
+    "divisions_or_regions": ["Ho Chi Minh City", "Hanoi", "Thanh Hoa", "Nghe An", "Dong Nai"],
+    "major_cities": ["Ho Chi Minh City", "Hanoi", "Da Nang", "Hai Phong", "Can Tho"]
+  }
+]

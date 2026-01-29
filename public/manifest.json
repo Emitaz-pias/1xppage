@@ -1,0 +1,16 @@
+{
+  "short_name": "1xBetSupport",
+  "name": "1xBet Support - 1xbetsupport.com",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "description": "Official 1xBet Agent Support app. Get agent onboarding, login support, deposits & withdrawals troubleshooting at 1xbetsupport.com",
+  ]
+
+}
