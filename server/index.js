@@ -285,7 +285,6 @@ app.post('/api/auth/register', authLimiter, async (req, res, next) => {
       throw error;
     }
 
-    await startSession(userId, res);
     return res.status(201).json({ user: publicUser(user.toObject()) });
   } catch (error) {
     return next(error);

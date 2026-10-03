@@ -50,23 +50,7 @@ export const AuthProvider = ({ children }) => {
     return () => { active = false; };
   }, []);
 
-  useEffect(() => {
-    if (!user?.userId) return undefined;
-    const refresh = () => {
-      authRequest('/api/auth/me')
-        .then(({ user: currentUser }) => setUser(currentUser))
-        .catch(() => {});
-    };
-    const timer = setInterval(refresh, 5000);
-    return () => clearInterval(timer);
-  }, [user?.userId]);
-
-  const refreshUser = async () => {
-    const data = await authRequest('/api/auth/me');
-    setUser(data.user);
-    return data.user;
-  };
-
+ 
   const login = async (credentials) => {
     const data = await authRequest('/api/auth/login', {
       method: 'POST',
@@ -81,7 +65,6 @@ export const AuthProvider = ({ children }) => {
       method: 'POST',
       body: JSON.stringify(account),
     });
-    setUser(data.user);
     return data.user;
   };
 
@@ -109,7 +92,6 @@ export const AuthProvider = ({ children }) => {
     register,
     changePassword,
     logout,
-    refreshUser,
     loading,
   };
 

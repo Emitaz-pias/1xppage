@@ -20,12 +20,14 @@ const Login = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
   const { login, register } = useAuth();
 
   const handleAuth = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     setLoading(true);
 
     // Validation
@@ -56,12 +58,16 @@ const Login = () => {
     }
 
     try {
-      let account;
       if (isRegistering) {
-        account = await register({ userId, password });
-      } else {
-        account = await login({ userId, password });
+        await register({ userId, password });
+        setIsRegistering(false);
+        setPassword("");
+        setConfirmPassword("");
+        setSuccess("Account created. Please sign in with your new account.");
+        return;
       }
+
+      const account = await login({ userId, password });
       navigate(account.role === "admin" ? "/admin" : "/payment");
     } catch (authError) {
       setError(authError.message || "Could not sign in. Please try again.");
@@ -140,6 +146,7 @@ const Login = () => {
               {error}
             </Alert>
           )}
+          {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
 
           {/* Login Form */}
           <Box component="form" onSubmit={handleAuth} sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
@@ -275,6 +282,7 @@ const Login = () => {
                 setPassword("");
                 setConfirmPassword("");
                 setError("");
+                setSuccess("");
               }}
               sx={{ color: "#90caf9", textTransform: "none" }}
             >
