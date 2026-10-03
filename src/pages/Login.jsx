@@ -283,16 +283,7 @@ const Login = () => {
           </Box>
 
           {/* Footer Info */}
-          <Typography
-            sx={{
-              color: "#90caf9",
-              textAlign: "center",
-              fontSize: "0.8rem",
-              mt: 3,
-            }}
-          >
-            Accounts are stored in this app's local database.
-          </Typography>
+          
         </Card>
       </Container>
     </Box>
