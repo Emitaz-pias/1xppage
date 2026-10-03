@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext(null);
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = 'https://onexppagebackend.onrender.com';
 
 
 

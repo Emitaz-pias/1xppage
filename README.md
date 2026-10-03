@@ -17,6 +17,7 @@ Balance changes and their audit records, password changes and session revocation
 4. Run `npm run dev` to start the API and React app.
 
 Open the React app at `http://localhost:3000`. The API listens at `http://127.0.0.1:4000` by default. Set `API_PORT` to change the port or `API_HOST=0.0.0.0` if the deployment platform requires an externally reachable interface.
+Set `CORS_ORIGINS` to a comma-separated list of exact frontend origins when the frontend and API use different hosts. Local development allows ports 3000 and 3001; production defaults allow `https://1xbetsupport.com` and `https://www.1xbetsupport.com`. Production session cookies use `SameSite=None; Secure` so credentialed requests from the separate frontend host can send them. If setting `CORS_ORIGINS` on the API host, include `http://localhost:3001` while testing from that local frontend.
 
 Create an account with any unused 9-digit User ID and a password of 12–128 characters. Once signed in, choose **Change password**. The current password is required. Changing a password revokes the user's existing sessions and starts a new session for the current browser.
 
@@ -38,6 +39,6 @@ The script migrates users (including password hashes and salts), sessions, and b
 
 ## Deployment
 
-The existing Netlify configuration publishes only the React frontend; it does not run this Express API. Deploy the API separately with a private server-side `MONGODB_URI`, a transaction-capable MongoDB replica set, HTTPS, `NODE_ENV=production`, and the `API_HOST`/`API_PORT` required by the host. Never expose the database URI or credentials in source code or frontend build-time configuration.
+The existing Netlify configuration publishes only the React frontend; it does not run this Express API. Deploy the API separately with a private server-side `MONGODB_URI`, a transaction-capable MongoDB replica set, HTTPS, `NODE_ENV=production`, `CORS_ORIGINS` set to the exact deployed frontend origin(s), and the `API_HOST`/`API_PORT` required by the host. Never expose the database URI or credentials in source code or frontend build-time configuration.
 
 Real payments would also need a payment provider and verified payment callbacks; this project does not include those.

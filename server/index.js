@@ -29,8 +29,42 @@ const port = Number(process.env.API_PORT || 4000);
 const host = process.env.API_HOST || '127.0.0.1';
 const sessionCookieName = 'practice_session';
 const sessionLifetimeMs = 7 * 24 * 60 * 60 * 1000;
+const allowedOrigins = new Set(
+  (process.env.CORS_ORIGINS || [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://1xbetsupport.com',
+    'https://www.1xbetsupport.com',
+  ].join(','))
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+);
 
 app.disable('x-powered-by');
+app.use((req, res, next) => {
+  const origin = req.get('Origin');
+  const isAllowedOrigin = origin && allowedOrigins.has(origin);
+
+  if (isAllowedOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.vary('Origin');
+  }
+
+  if (req.method === 'OPTIONS') {
+    if (!isAllowedOrigin) return res.sendStatus(403);
+    return res.sendStatus(204);
+  }
+
+  if (origin && !isAllowedOrigin && !['GET', 'HEAD'].includes(req.method)) {
+    return res.sendStatus(403);
+  }
+
+  return next();
+});
 app.use(helmet());
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
@@ -45,7 +79,7 @@ const authLimiter = rateLimit({
 
 const cookieOptions = () => ({
   httpOnly: true,
-  sameSite: 'strict',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
   secure: process.env.NODE_ENV === 'production',
   path: '/api',
   maxAge: sessionLifetimeMs,
