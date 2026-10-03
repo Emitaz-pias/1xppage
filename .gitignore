@@ -10,6 +10,10 @@
 
 # production
 /build
+/server/*.sqlite
+/server/*.sqlite-shm
+/server/*.sqlite-wal
+/server/.env
 
 # misc
 .DS_Store

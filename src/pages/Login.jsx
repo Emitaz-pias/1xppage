@@ -16,29 +16,21 @@ import logo from "../images/logo.png";
 const Login = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isRegistering, setIsRegistering] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, register } = useAuth();
 
-  // Demo users: only these five 9-digit numeric User IDs are allowed to login
-  const allowedUsers = [
-  { userId: "738492516", password: "lkjK$%4Q@9", name: "738492516" },
-  { userId: "904175283", password: "Zx!7mP#2L$", name: "904175283" },
-  { userId: "561804972", password: "A9$kW@%r8Q", name: "561804972" },
-  { userId: "289746105", password: "P@4%Xl9!K$", name: "289746105" },
-  { userId: "670915834", password: "mQ$!7Zk@4%", name: "670915834" },
-    
-  ];
-
-  const handleLogin = async (e) => {
+  const handleAuth = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     // Validation
-    if (!userId || !password) {
-      setError("Please enter both User ID and password");
+    if (!userId || !password || (isRegistering && !confirmPassword)) {
+      setError("Please complete all fields.");
       setLoading(false);
       return;
     }
@@ -51,42 +43,28 @@ const Login = () => {
       return;
     }
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
+    if (isRegistering && password.length < 12) {
+      setError("Choose a password with at least 12 characters.");
+      setLoading(false);
+      return;
+    }
+
+    if (isRegistering && password !== confirmPassword) {
+      setError("Passwords do not match.");
       setLoading(false);
       return;
     }
 
     try {
-      // Simulate API call to backend
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Mock authentication - in production, verify with backend
-      const matchedUser = allowedUsers.find((u) => u.userId === userId && u.password === password);
-
-      if (matchedUser) {
-        const userData = {
-          id: matchedUser.userId,
-          userId: matchedUser.userId,
-          email: `${matchedUser.userId}@1xbetsupport.com`,
-          name: matchedUser.name,
-        };
-
-        // Save auth data to localStorage
-        localStorage.setItem("user", JSON.stringify(userData));
-        localStorage.setItem("authToken", "mock-token-" + Date.now());
-
-        // Update auth context
-        login(userData);
-
-        // Redirect to payment page
-        navigate("/payment");
+      let account;
+      if (isRegistering) {
+        account = await register({ userId, password });
       } else {
-        setError("Invalid credentials. ");
+        account = await login({ userId, password });
       }
-    } catch (err) {
-      setError("Login failed. Please try again.");
-      console.error("Login error:", err);
+      navigate(account.role === "admin" ? "/admin" : "/payment");
+    } catch (authError) {
+      setError(authError.message || "Could not sign in. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -164,7 +142,7 @@ const Login = () => {
           )}
 
           {/* Login Form */}
-          <Box component="form" onSubmit={handleLogin} sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
+          <Box component="form" onSubmit={handleAuth} sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
             {/* User ID Field */}
             <TextField            
               label="User ID"
@@ -243,6 +221,17 @@ const Login = () => {
                 },
               }}
             />
+            {isRegistering && (
+              <TextField
+                label="Confirm password"
+                type="password"
+                fullWidth
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                disabled={loading}
+                autoComplete="new-password"
+              />
+            )}
             {/* Login Button */}
             <Button
               variant="contained"
@@ -275,37 +264,23 @@ const Login = () => {
                   <span>Logging in...</span>
                 </Box>
               ) : (
-                "Login"
+                isRegistering ? "Create account" : "Login"
               )}
             </Button>
-          </Box>
-
-          {/* Demo Credentials Info */}
-          {/* <Box
-            sx={{
-              background: "#e7f3ff",
-              border: "2px solid #3ba4ff",
-              borderRadius: "8px",
-              p: 2,
-              mt: 2.5,
-            }}
-          >
-            <Typography
-              sx={{
-                color: "#113264",
-                fontWeight: 600,
-                fontSize: "0.9rem",
-                mb: 0.8,
+            <Button
+              type="button"
+              disabled={loading}
+              onClick={() => {
+                setIsRegistering((current) => !current);
+                setPassword("");
+                setConfirmPassword("");
+                setError("");
               }}
+              sx={{ color: "#90caf9", textTransform: "none" }}
             >
-              📝 Demo Login Credentials (only these will work):
-            </Typography>
-            {allowedUsers.map((u) => (
-              <Typography key={u.userId} sx={{ color: "#666", fontSize: "0.85rem", mb: 0.5 }}>
-                User ID: <strong>{u.userId}</strong> — Password: <strong>{u.password}</strong>
-              </Typography>
-            ))}
-          </Box> */}
+              {isRegistering ? "Already have an account? Sign in" : "New here? Create an account"}
+            </Button>
+          </Box>
 
           {/* Footer Info */}
           <Typography
@@ -316,7 +291,7 @@ const Login = () => {
               mt: 3,
             }}
           >
-            Secure login with User ID and password.
+            Accounts are stored in this app's local database.
           </Typography>
         </Card>
       </Container>

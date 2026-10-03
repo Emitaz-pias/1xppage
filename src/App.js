@@ -10,9 +10,11 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import CookiePolicy from './pages/CookiePolicy';
 import Payment from './pages/Payment';
+import AdminDashboard from './pages/AdminDashboard';
 
 // Components
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
 
 function App() {
   return (
@@ -21,6 +23,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminProtectedRoute>
+                <AdminDashboard />
+              </AdminProtectedRoute>
+            }
+          />
           {/* <Route path="/cookie-policy" element={<CookiePolicy />} /> */}
           <Route
             path="/payment"

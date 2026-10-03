@@ -2,6 +2,7 @@
   "name": "xbtshop",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://127.0.0.1:4000",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -12,10 +13,14 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.12.2",
+    "cookie-parser": "^1.4.7",
     "country-list": "^2.4.1",
     "country-state-city": "^3.2.1",
     "date-fns": "^4.1.0",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
     "framer-motion": "^12.23.24",
+    "helmet": "^8.3.0",
     "lucide-react": "^0.548.0",
     "react": "^19.2.0",
     "react-country-flag": "^3.1.0",
@@ -29,6 +34,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "server": "node --experimental-sqlite server/index.js",
+    "dev": "node server/dev.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

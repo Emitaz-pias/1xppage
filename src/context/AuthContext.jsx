@@ -1,63 +1,112 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
+
+async function authRequest(path, options = {}) {
+  const response = await fetch(path, {
+    ...options,
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data.error || 'Request failed. Please try again.');
+  }
+  return data;
+}
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
   return context;
 };
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Load auth state from localStorage on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const authToken = localStorage.getItem('authToken');
+    let active = true;
+    authRequest('/api/auth/me')
+      .then(({ user: currentUser }) => {
+        if (active) setUser(currentUser);
+      })
+      .catch(() => {
+        if (active) setUser(null);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
 
-    if (storedUser && authToken) {
-      try {
-        setUser(JSON.parse(storedUser));
-        setIsAuthenticated(true);
-      } catch (error) {
-        console.error('Error parsing stored user:', error);
-        localStorage.removeItem('user');
-        localStorage.removeItem('authToken');
-      }
-    }
-    setLoading(false);
+    return () => { active = false; };
   }, []);
 
-  const login = (userData) => {
-    setUser(userData);
-    setIsAuthenticated(true);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('authToken', 'mock-token-' + Date.now());
+  useEffect(() => {
+    if (!user?.userId) return undefined;
+    const refresh = () => {
+      authRequest('/api/auth/me')
+        .then(({ user: currentUser }) => setUser(currentUser))
+        .catch(() => {});
+    };
+    const timer = setInterval(refresh, 5000);
+    return () => clearInterval(timer);
+  }, [user?.userId]);
+
+  const refreshUser = async () => {
+    const data = await authRequest('/api/auth/me');
+    setUser(data.user);
+    return data.user;
   };
 
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('authToken');
+  const login = async (credentials) => {
+    const data = await authRequest('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    });
+    setUser(data.user);
+    return data.user;
+  };
+
+  const register = async (account) => {
+    const data = await authRequest('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(account),
+    });
+    setUser(data.user);
+    return data.user;
+  };
+
+  const changePassword = async (passwords) => {
+    const data = await authRequest('/api/auth/change-password', {
+      method: 'POST',
+      body: JSON.stringify(passwords),
+    });
+    setUser(data.user);
+    return data;
+  };
+
+  const logout = async () => {
+    try {
+      await authRequest('/api/auth/logout', { method: 'POST' });
+    } finally {
+      setUser(null);
+    }
   };
 
   const value = {
     user,
-    isAuthenticated,
+    isAuthenticated: Boolean(user),
     login,
+    register,
+    changePassword,
     logout,
-    loading
+    refreshUser,
+    loading,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -101,14 +101,11 @@ const Payment = () => {
     setSubmitting(true);
 
     try {
-      // Simulate payment processing
+      // This local project does not process payments.
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Here you would send the payment data to your backend
-      console.log('Payment submitted:', formData);
-
-      setSnackMessage('Payment processed successfully! Thank you for your transaction.');
-      setSnackSeverity('success');
+      setSnackMessage('No payment was sent or verified.');
+      setSnackSeverity('info');
       setOpenSnack(true);
 
       // Reset form

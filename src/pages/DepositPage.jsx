@@ -14,9 +14,12 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  TextField,
+  Alert,
 } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LockResetIcon from "@mui/icons-material/LockReset";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import countriesData from "../data/countriesData.json";
@@ -83,13 +86,56 @@ const DepositPage = () => {
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [loading, setLoading] = useState(false);
   const [restrictionModalOpen, setRestrictionModalOpen] = useState(false);
+  const [changePasswordOpen, setChangePasswordOpen] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordSuccess, setPasswordSuccess] = useState("");
+  const [passwordSaving, setPasswordSaving] = useState(false);
   
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, changePassword } = useAuth();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate("/login");
+  };
+
+  const handleChangePassword = async (event) => {
+    event.preventDefault();
+    setPasswordError("");
+    setPasswordSuccess("");
+    if (newPassword !== confirmNewPassword) {
+      setPasswordError("New passwords do not match.");
+      return;
+    }
+    if (newPassword.length < 12) {
+      setPasswordError("Choose a new password with at least 12 characters.");
+      return;
+    }
+
+    setPasswordSaving(true);
+    try {
+      const result = await changePassword({ currentPassword, newPassword });
+      setPasswordSuccess(result.message);
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+    } catch (error) {
+      setPasswordError(error.message);
+    } finally {
+      setPasswordSaving(false);
+    }
+  };
+
+  const closePasswordDialog = () => {
+    setChangePasswordOpen(false);
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmNewPassword("");
+    setPasswordError("");
+    setPasswordSuccess("");
   };
 
   const selectedCountryData = countriesData.find(
@@ -123,14 +169,12 @@ const DepositPage = () => {
     setSelectedMethod(null);
   };
 
-  const handleDepositSubmit = async (depositData) => {
+  const handleDepositSubmit = async () => {
     setLoading(true);
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log("Deposit submitted:", depositData);
-      // Handle success - show notification or redirect
-      alert(`Deposit of ${depositData.amount} ${depositData.currency} initiated via ${depositData.method}`);
+      alert("Request simulated. No payment was sent, verified, or credited.");
       handleModalClose();
     } catch (error) {
       console.error("Deposit error:", error);
@@ -188,24 +232,39 @@ const DepositPage = () => {
             </Typography>
           )}
         </Box>
-        <Button
-          variant="outlined"
-          startIcon={<LogoutIcon />}
-          onClick={handleLogout}
-          sx={{
-            color: "#113264",
-            borderColor: "#113264",
-            fontWeight: 600,
-            borderRadius: "8px",
-            transition: "all 0.3s ease",
-            "&:hover": {
-              backgroundColor: "#f0f6ff",
-              borderColor: "#113264",
-            },
-          }}
-        >
-          Logout
-        </Button>
+        {user && (
+          <Card
+            variant="outlined"
+            sx={{ minWidth: { xs: "100%", sm: 190 }, borderColor: "#d9e6f5", borderRadius: "10px" }}
+          >
+            <CardContent sx={{ py: "12px !important", px: 2 }}>
+              <Typography variant="caption" sx={{ color: "#66788a", fontWeight: 700 }}>
+                Balance
+              </Typography>
+              <Typography variant="h5" sx={{ color: "#113264", fontWeight: 700, lineHeight: 1.35 }}>
+                {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format((user.balanceCents || 0) / 100)}
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
+        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+          <Button
+            variant="outlined"
+            startIcon={<LockResetIcon />}
+            onClick={() => setChangePasswordOpen(true)}
+            sx={{ color: "#113264", borderColor: "#113264", fontWeight: 600, borderRadius: "8px" }}
+          >
+            Change password
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<LogoutIcon />}
+            onClick={handleLogout}
+            sx={{ color: "#113264", borderColor: "#113264", fontWeight: 600, borderRadius: "8px" }}
+          >
+            Logout
+          </Button>
+        </Box>
       </Box>
 
       {/* Country + Tabs Section */}
@@ -441,6 +500,50 @@ const DepositPage = () => {
         onSubmit={handleDepositSubmit}
         loading={loading}
       />
+
+      <Dialog open={changePasswordOpen} onClose={closePasswordDialog} maxWidth="xs" fullWidth>
+        <Box component="form" onSubmit={handleChangePassword}>
+          <DialogTitle>Change password</DialogTitle>
+          <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, pt: "8px !important" }}>
+            {passwordError && <Alert severity="error">{passwordError}</Alert>}
+            {passwordSuccess && <Alert severity="success">{passwordSuccess}</Alert>}
+            <TextField
+              label="Current password"
+              type="password"
+              autoComplete="current-password"
+              value={currentPassword}
+              onChange={(event) => setCurrentPassword(event.target.value)}
+              required
+              fullWidth
+            />
+            <TextField
+              label="New password"
+              type="password"
+              autoComplete="new-password"
+              helperText="Use at least 12 characters."
+              value={newPassword}
+              onChange={(event) => setNewPassword(event.target.value)}
+              required
+              fullWidth
+            />
+            <TextField
+              label="Confirm new password"
+              type="password"
+              autoComplete="new-password"
+              value={confirmNewPassword}
+              onChange={(event) => setConfirmNewPassword(event.target.value)}
+              required
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions sx={{ px: 3, pb: 2 }}>
+            <Button onClick={closePasswordDialog} disabled={passwordSaving}>Cancel</Button>
+            <Button type="submit" variant="contained" disabled={passwordSaving}>
+              {passwordSaving ? "Saving…" : "Save password"}
+            </Button>
+          </DialogActions>
+        </Box>
+      </Dialog>
 
       {/* Region Restriction Modal */}
       <Dialog 
