@@ -21,6 +21,7 @@
     "express-rate-limit": "^8.7.0",
     "framer-motion": "^12.23.24",
     "helmet": "^8.3.0",
+    "mongoose": "^8.19.1",
     "lucide-react": "^0.548.0",
     "react": "^19.2.0",
     "react-country-flag": "^3.1.0",
@@ -34,7 +35,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "node --experimental-sqlite server/index.js",
+    "server": "node server/index.js",
+    "migrate:sqlite": "node --experimental-sqlite server/migrate-sqlite-to-mongodb.js",
     "dev": "node server/dev.js",
     "build": "react-scripts build",
     "test": "react-scripts test",

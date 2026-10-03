@@ -5,7 +5,7 @@ const projectRoot = path.join(__dirname, '..');
 const commands = [
   {
     name: 'API',
-    args: ['--experimental-sqlite', path.join(__dirname, 'index.js')],
+    args: [path.join(__dirname, 'index.js')],
   },
   {
     name: 'React',

@@ -1,9 +1,12 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext(null);
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 
 async function authRequest(path, options = {}) {
-  const response = await fetch(path, {
+  const response = await fetch(`${API_URL}${path}`, {
     ...options,
     credentials: 'include',
     headers: {
@@ -13,9 +16,11 @@ async function authRequest(path, options = {}) {
   });
 
   const data = await response.json().catch(() => ({}));
+
   if (!response.ok) {
     throw new Error(data.error || 'Request failed. Please try again.');
   }
+
   return data;
 }
 
