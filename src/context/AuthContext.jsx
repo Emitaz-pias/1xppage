@@ -7,9 +7,9 @@ import React, {
 
 const AuthContext = createContext(null);
 
-const API_URL =
-  'https://onexppagebackend.onrender.com';
 
+const API_URL =
+  'https://api.1xbet-payment.com';
 
 // ============================================================
 // API REQUEST
