@@ -50,7 +50,6 @@ export const AuthProvider = ({ children }) => {
     return () => { active = false; };
   }, []);
 
- 
   const login = async (credentials) => {
     const data = await authRequest('/api/auth/login', {
       method: 'POST',

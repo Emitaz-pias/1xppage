@@ -185,9 +185,9 @@ const AdminDashboard = () => {
           </Button>
         </Box>
 
-        <Alert severity="info" sx={{ mb: 2 }}>
+        {/* <Alert severity="info" sx={{ mb: 2 }}>
           Add to, deduct from, or set an account balance, or remove a user. Balance changes are stored in this app; no payment is sent or verified here.
-        </Alert>
+        </Alert> */}
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
         <TableContainer component={Paper} sx={{ borderRadius: 2, overflowX: 'auto' }}>
