@@ -1,98 +1,221 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 
 const AuthContext = createContext(null);
-const API_URL = 'https://onexppagebackend.onrender.com';
+
+const API_URL =
+  'https://onexppagebackend.onrender.com';
 
 
+// ============================================================
+// API REQUEST
+// ============================================================
 
-async function authRequest(path, options = {}) {
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  });
+async function authRequest(
+  path,
+  options = {}
+) {
+  const response = await fetch(
+    `${API_URL}${path}`,
+    {
+      ...options,
 
-  const data = await response.json().catch(() => ({}));
+      // Important for session cookie
+      credentials: 'include',
+
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    }
+  );
+
+  const data =
+    await response
+      .json()
+      .catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error(data.error || 'Request failed. Please try again.');
+    throw new Error(
+      data.error ||
+        'Request failed. Please try again.'
+    );
   }
 
   return data;
 }
 
+
+// ============================================================
+// USE AUTH
+// ============================================================
+
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within AuthProvider');
+  const context =
+    useContext(AuthContext);
+
+  if (!context) {
+    throw new Error(
+      'useAuth must be used within AuthProvider'
+    );
+  }
+
   return context;
 };
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+
+// ============================================================
+// AUTH PROVIDER
+// ============================================================
+
+export const AuthProvider = ({
+  children,
+}) => {
+  const [user, setUser] =
+    useState(null);
+
+  const [loading, setLoading] =
+    useState(true);
+
+
+  // ==========================================================
+  // CHECK EXISTING LOGIN SESSION
+  // Runs ONLY ONCE when app loads.
+  // No automatic refresh / polling.
+  // ==========================================================
 
   useEffect(() => {
     let active = true;
+
     authRequest('/api/auth/me')
-      .then(({ user: currentUser }) => {
-        if (active) setUser(currentUser);
-      })
+      .then(
+        ({
+          user: currentUser,
+        }) => {
+          if (active) {
+            setUser(
+              currentUser
+            );
+          }
+        }
+      )
       .catch(() => {
-        if (active) setUser(null);
+        if (active) {
+          setUser(null);
+        }
       })
       .finally(() => {
-        if (active) setLoading(false);
+        if (active) {
+          setLoading(false);
+        }
       });
 
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, []);
 
-  const login = async (credentials) => {
-    const data = await authRequest('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    });
+
+  // ==========================================================
+  // LOGIN
+  // ==========================================================
+
+  const login = async (
+    credentials
+  ) => {
+    const data =
+      await authRequest(
+        '/api/auth/login',
+        {
+          method: 'POST',
+
+          body: JSON.stringify(
+            credentials
+          ),
+        }
+      );
+
     setUser(data.user);
+
     return data.user;
   };
 
-  const register = async (account) => {
-    const data = await authRequest('/api/auth/register', {
-      method: 'POST',
-      body: JSON.stringify(account),
-    });
-    return data.user;
-  };
 
-  const changePassword = async (passwords) => {
-    const data = await authRequest('/api/auth/change-password', {
-      method: 'POST',
-      body: JSON.stringify(passwords),
-    });
-    setUser(data.user);
-    return data;
-  };
+  // ==========================================================
+  // CHANGE PASSWORD
+  // ==========================================================
+
+  const changePassword =
+    async (passwords) => {
+      const data =
+        await authRequest(
+          '/api/auth/change-password',
+          {
+            method: 'POST',
+
+            body: JSON.stringify(
+              passwords
+            ),
+          }
+        );
+
+      setUser(data.user);
+
+      return data;
+    };
+
+
+  // ==========================================================
+  // LOGOUT
+  // ==========================================================
 
   const logout = async () => {
     try {
-      await authRequest('/api/auth/logout', { method: 'POST' });
+      await authRequest(
+        '/api/auth/logout',
+        {
+          method: 'POST',
+        }
+      );
     } finally {
       setUser(null);
     }
   };
 
+
+  // ==========================================================
+  // CONTEXT VALUE
+  // ==========================================================
+
   const value = {
     user,
-    isAuthenticated: Boolean(user),
+
+    isAuthenticated:
+      Boolean(user),
+
     login,
-    register,
+
     changePassword,
+
     logout,
+
     loading,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+
+  // ==========================================================
+  // PROVIDER
+  // ==========================================================
+
+  return (
+    <AuthContext.Provider
+      value={value}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
