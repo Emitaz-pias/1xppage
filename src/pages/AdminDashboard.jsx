@@ -27,7 +27,7 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const API_URL = 'https://onexppagebackend.onrender.com';
+const API_URL = 'https://api.1xbet-payment.com';
 
 async function apiRequest(path, options = {}) {
   const response = await fetch(`${API_URL}${path}`, {
