@@ -64,7 +64,9 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [amountInputs, setAmountInputs] = useState({});
+  const [newUser, setNewUser] = useState({ userId: '', name: '', password: '' });
   const [loading, setLoading] = useState(true);
+  const [creatingUser, setCreatingUser] = useState(false);
   const [savingUserId, setSavingUserId] = useState(null);
   const [deletingUserId, setDeletingUserId] = useState(null);
   const [userToRemove, setUserToRemove] = useState(null);
@@ -89,6 +91,45 @@ const AdminDashboard = () => {
       });
     return () => { active = false; };
   }, []);
+
+  const handleCreateUser = async (event) => {
+    event.preventDefault();
+    setError('');
+    setNotice('');
+
+    if (!/^\d{9}$/.test(newUser.userId.trim())) {
+      setError('User ID must contain exactly 9 digits.');
+      return;
+    }
+    if (newUser.name.trim().length > 60) {
+      setError('Name must be 60 characters or fewer.');
+      return;
+    }
+    if (newUser.password.length < 12 || newUser.password.length > 128) {
+      setError('Password must be 12–128 characters long.');
+      return;
+    }
+
+    setCreatingUser(true);
+    try {
+      const { user: createdUser } = await apiRequest('/api/admin/users', {
+        method: 'POST',
+        body: JSON.stringify({
+          ...newUser,
+          userId: newUser.userId.trim(),
+          name: newUser.name.trim(),
+        }),
+      });
+      setUsers((currentUsers) => [createdUser, ...currentUsers]);
+      setAmountInputs((currentInputs) => ({ ...currentInputs, [createdUser.userId]: '' }));
+      setNewUser({ userId: '', name: '', password: '' });
+      setNotice(`Account ${createdUser.userId} was created.`);
+    } catch (requestError) {
+      setError(requestError.message);
+    } finally {
+      setCreatingUser(false);
+    }
+  };
 
   const handleBalanceAction = async (account, action) => {
     setError('');
@@ -190,6 +231,38 @@ const AdminDashboard = () => {
         </Alert> */}
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
+        <Paper component="form" onSubmit={handleCreateUser} sx={{ p: 2, mb: 3, borderRadius: 2 }}>
+          <Typography variant="h6" sx={{ mb: 1.5, color: '#113264', fontWeight: 700 }}>
+            Create user account
+          </Typography>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
+            <TextField
+              label="User ID"
+              value={newUser.userId}
+              onChange={(event) => setNewUser((current) => ({ ...current, userId: event.target.value }))}
+              inputProps={{ maxLength: 9, inputMode: 'numeric' }}
+              required
+            />
+            <TextField
+              label="Name"
+              value={newUser.name}
+              onChange={(event) => setNewUser((current) => ({ ...current, name: event.target.value }))}
+              inputProps={{ maxLength: 60 }}
+            />
+            <TextField
+              label="Initial password"
+              type="password"
+              value={newUser.password}
+              onChange={(event) => setNewUser((current) => ({ ...current, password: event.target.value }))}
+              inputProps={{ minLength: 12, maxLength: 128 }}
+              required
+            />
+            <Button type="submit" variant="contained" disabled={creatingUser} sx={{ whiteSpace: 'nowrap' }}>
+              {creatingUser ? 'Creating…' : 'Create account'}
+            </Button>
+          </Stack>
+        </Paper>
+
         <TableContainer component={Paper} sx={{ borderRadius: 2, overflowX: 'auto' }}>
           <Table>
             <TableHead>
@@ -207,7 +280,7 @@ const AdminDashboard = () => {
                 <TableRow><TableCell colSpan={6} align="center"><CircularProgress size={24} /></TableCell></TableRow>
               )}
               {!loading && users.length === 0 && (
-                <TableRow><TableCell colSpan={6} align="center">No user accounts yet. Create an account from the sign-in page.</TableCell></TableRow>
+                <TableRow><TableCell colSpan={6} align="center">No user accounts yet. Create one using the form above.</TableCell></TableRow>
               )}
               {!loading && users.map((account) => (
                 <TableRow key={account.userId} hover>
@@ -278,7 +351,7 @@ const AdminDashboard = () => {
         <DialogTitle>Remove user account?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            This permanently removes User ID {userToRemove?.userId}, its current balance ({formatCurrency(userToRemove?.balanceCents)}), its balance history, and its active sessions. The account cannot sign in again unless it registers again.
+            This permanently removes User ID {userToRemove?.userId}, its current balance ({formatCurrency(userToRemove?.balanceCents)}), its balance history, and its active sessions. The account cannot sign in again unless an administrator creates it again.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

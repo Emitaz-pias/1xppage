@@ -253,44 +253,6 @@ app.get('/api/auth/me', (req, res) => {
   res.json({ user: req.authUser ? publicUser(req.authUser) : null });
 });
 
-app.post('/api/auth/register', authLimiter, async (req, res, next) => {
-  try {
-    const userId = String(req.body?.userId || '').trim();
-    const name = String(req.body?.name || userId).trim().slice(0, 60);
-    const password = req.body?.password;
-
-    if (!/^\d{9}$/.test(userId)) {
-      return res.status(400).json({ error: 'User ID must contain exactly 9 digits.' });
-    }
-    if (typeof password !== 'string' || password.length < 12 || password.length > 128) {
-      return res.status(400).json({ error: 'Password must be 12–128 characters long.' });
-    }
-
-    const credentials = await hashPassword(password);
-    let user;
-    try {
-      [user] = await User.create([{
-        _id: userId,
-        name: name || userId,
-        passwordSalt: credentials.salt,
-        passwordHash: credentials.hash,
-        balanceCents: 0,
-        role: 'user',
-        createdAt: Date.now(),
-      }]);
-    } catch (error) {
-      if (error.code === 11000) {
-        return res.status(409).json({ error: 'That User ID is already registered.' });
-      }
-      throw error;
-    }
-
-    return res.status(201).json({ user: publicUser(user.toObject()) });
-  } catch (error) {
-    return next(error);
-  }
-});
-
 app.post('/api/auth/login', authLimiter, async (req, res, next) => {
   try {
     const userId = String(req.body?.userId || '').trim();
@@ -366,6 +328,44 @@ app.get('/api/admin/users', requireAdmin, async (_req, res, next) => {
       .lean();
     const users = records.map(({ _id, ...user }) => ({ userId: _id, ...user }));
     return res.json({ users });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.post('/api/admin/users', requireAdmin, async (req, res, next) => {
+  try {
+    const userId = String(req.body?.userId || '').trim();
+    const name = String(req.body?.name || '').trim().slice(0, 60) || userId;
+    const password = req.body?.password;
+
+    if (!/^\d{9}$/.test(userId)) {
+      return res.status(400).json({ error: 'User ID must contain exactly 9 digits.' });
+    }
+    if (typeof password !== 'string' || password.length < 12 || password.length > 128) {
+      return res.status(400).json({ error: 'Password must be 12–128 characters long.' });
+    }
+
+    const credentials = await hashPassword(password);
+    let user;
+    try {
+      [user] = await User.create([{
+        _id: userId,
+        name,
+        passwordSalt: credentials.salt,
+        passwordHash: credentials.hash,
+        balanceCents: 0,
+        role: 'user',
+        createdAt: Date.now(),
+      }]);
+    } catch (error) {
+      if (error.code === 11000) {
+        return res.status(409).json({ error: 'That User ID is already registered.' });
+      }
+      throw error;
+    }
+
+    return res.status(201).json({ user: publicUser(user.toObject()) });
   } catch (error) {
     return next(error);
   }

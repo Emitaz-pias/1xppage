@@ -16,28 +16,16 @@ import logo from "../images/logo.png";
 const Login = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isRegistering, setIsRegistering] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
-  const { login, register } = useAuth();
+  const { login } = useAuth();
 
   const handleAuth = async (e) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
     setLoading(true);
 
-    // Validation
-    if (!userId || !password || (isRegistering && !confirmPassword)) {
-      setError("Please complete all fields.");
-      setLoading(false);
-      return;
-    }
-
-    // User ID must be exactly 9 digits (numeric only)
     const userIdPattern = /^\d{9}$/;
     if (!userIdPattern.test(userId)) {
       setError("User ID must be a 9-digit number (digits only)");
@@ -45,28 +33,13 @@ const Login = () => {
       return;
     }
 
-    if (isRegistering && password.length < 12) {
-      setError("Choose a password with at least 12 characters.");
-      setLoading(false);
-      return;
-    }
-
-    if (isRegistering && password !== confirmPassword) {
-      setError("Passwords do not match.");
+    if (!password) {
+      setError("Please enter your password.");
       setLoading(false);
       return;
     }
 
     try {
-      if (isRegistering) {
-        await register({ userId, password });
-        setIsRegistering(false);
-        setPassword("");
-        setConfirmPassword("");
-        setSuccess("Account created. Please sign in with your new account.");
-        return;
-      }
-
       const account = await login({ userId, password });
       navigate(account.role === "admin" ? "/admin" : "/payment");
     } catch (authError) {
@@ -146,8 +119,6 @@ const Login = () => {
               {error}
             </Alert>
           )}
-          {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
-
           {/* Login Form */}
           <Box component="form" onSubmit={handleAuth} sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
             {/* User ID Field */}
@@ -228,17 +199,6 @@ const Login = () => {
                 },
               }}
             />
-            {isRegistering && (
-              <TextField
-                label="Confirm password"
-                type="password"
-                fullWidth
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                disabled={loading}
-                autoComplete="new-password"
-              />
-            )}
             {/* Login Button */}
             <Button
               variant="contained"
@@ -271,22 +231,8 @@ const Login = () => {
                   <span>Logging in...</span>
                 </Box>
               ) : (
-                isRegistering ? "Create account" : "Login"
+                "Login"
               )}
-            </Button>
-            <Button
-              type="button"
-              disabled={loading}
-              onClick={() => {
-                setIsRegistering((current) => !current);
-                setPassword("");
-                setConfirmPassword("");
-                setError("");
-                setSuccess("");
-              }}
-              sx={{ color: "#90caf9", textTransform: "none" }}
-            >
-              {isRegistering ? "Already have an account? Sign in" : "New here? Create an account"}
             </Button>
           </Box>
 

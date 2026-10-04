@@ -1,6 +1,6 @@
 # Local account app
 
-This repository includes a React frontend and an Express API for account creation, sign-in, and password changes. The deposit interface is illustrative: this app does not send, receive, or verify payments. Balances are displayed values managed by the administrator and are not linked to deposits.
+This repository includes a React frontend and an Express API for administrator-managed account creation, sign-in, and password changes. Public sign-up is disabled; only a signed-in administrator can create user accounts from `/admin`. The deposit interface is illustrative: this app does not send, receive, or verify payments. Balances are displayed values managed by the administrator and are not linked to deposits.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ Balance changes and their audit records, password changes and session revocation
 Open the React app at `http://localhost:3000`. The API listens at `http://127.0.0.1:4000` by default. Set `API_PORT` to change the port or `API_HOST=0.0.0.0` if the deployment platform requires an externally reachable interface.
 Set `CORS_ORIGINS` to a comma-separated list of exact frontend origins when the frontend and API use different hosts. Local development allows ports 3000 and 3001; production defaults allow `https://1xbetsupport.com` and `https://www.1xbetsupport.com`. Production session cookies use `SameSite=None; Secure` so credentialed requests from the separate frontend host can send them. If setting `CORS_ORIGINS` on the API host, include `http://localhost:3001` while testing from that local frontend.
 
-Create an account with any unused 9-digit User ID and a password of 12–128 characters. Once signed in, choose **Change password**. The current password is required. Changing a password revokes the user's existing sessions and starts a new session for the current browser.
+Only an administrator can create an account. Sign in with the administrator credentials to open `/admin`, then use **Create user account** with an unused 9-digit User ID and a password of 12–128 characters. Share the initial credentials with the user securely. Users can sign in with those credentials and choose **Change password**; the current password is required. Changing a password revokes the user's existing sessions and starts a new session for the current browser.
 
 On first startup, the server creates an administrator account and prints its User ID and password in the server terminal. Save those credentials. Sign in with them to open `/admin`; the dashboard lists user accounts and lets the administrator add to, deduct from, or set each balance. A deduction cannot exceed the current balance. Accounts can also be removed after confirmation. Balance changes appear for active users within about five seconds. To configure a known admin, set both `ADMIN_USER_ID` (exactly 9 digits) and `ADMIN_PASSWORD` (12–128 characters) in `server/.env`.
 
