@@ -16,6 +16,7 @@ import {
   DialogActions,
   TextField,
   Alert,
+  Snackbar,
 } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -118,10 +119,8 @@ const DepositPage = () => {
     setPasswordSaving(true);
     try {
       const result = await changePassword({ currentPassword, newPassword });
+      closePasswordDialog();
       setPasswordSuccess(result.message);
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmNewPassword("");
     } catch (error) {
       setPasswordError(error.message);
     } finally {
@@ -506,7 +505,6 @@ const DepositPage = () => {
           <DialogTitle>Change password</DialogTitle>
           <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, pt: "8px !important" }}>
             {passwordError && <Alert severity="error">{passwordError}</Alert>}
-            {passwordSuccess && <Alert severity="success">{passwordSuccess}</Alert>}
             <TextField
               label="Current password"
               type="password"
@@ -538,12 +536,22 @@ const DepositPage = () => {
           </DialogContent>
           <DialogActions sx={{ px: 3, pb: 2 }}>
             <Button onClick={closePasswordDialog} disabled={passwordSaving}>Cancel</Button>
-            <Button type="submit" variant="contained" disabled={passwordSaving}>
+            <Button type="submit" variant="contained" disabled={passwordSaving || Boolean(passwordSuccess)}>
               {passwordSaving ? "Saving…" : "Save password"}
             </Button>
           </DialogActions>
         </Box>
       </Dialog>
+      <Snackbar
+        open={Boolean(passwordSuccess)}
+        autoHideDuration={3000}
+        onClose={() => setPasswordSuccess("")}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity="success" onClose={() => setPasswordSuccess("")}>
+          {passwordSuccess}
+        </Alert>
+      </Snackbar>
 
       {/* Region Restriction Modal */}
       <Dialog 
